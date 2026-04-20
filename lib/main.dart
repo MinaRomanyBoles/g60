@@ -52,58 +52,92 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const Home(),
+      home: Scaffold(
+        appBar: AppBar(title: Text('Flutter State'), centerTitle: true,),
+        body: Center(
+          child: StatefulBuilder(
+            builder: (context, reSetValue){
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setCounter){
+                      var i = setCounter;
+
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('$counter1', style: TextStyle(fontSize: 64,)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FloatingActionButton(
+                                onPressed: (){
+                                  setCounter(() => --counter1);
+                                },
+                                child: Icon(Icons.remove),
+                              ),
+                              FloatingActionButton(
+                                onPressed: ()=> setCounter(() => counter1 = 0),
+                                child: Icon(Icons.refresh),
+                              ),
+                              FloatingActionButton(
+                                onPressed: ()=> setCounter(() => ++counter1),
+                                child: Icon(Icons.add),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                  StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setCounter){
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('$counter2', style: TextStyle(fontSize: 64,)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              FloatingActionButton(
+                                onPressed: (){
+                                  setCounter(() => --counter2);
+                                },
+                                child: Icon(Icons.remove),
+                              ),
+                              FloatingActionButton(
+                                onPressed: ()=> setCounter(() => counter2 = 0),
+                                child: Icon(Icons.refresh),
+                              ),
+                              FloatingActionButton(
+                                onPressed: ()=> setCounter(() => ++counter2),
+                                child: Icon(Icons.add),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+
+                  ),
+
+                ],
+              );
+            },
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){
+
+          },
+          child: Icon(Icons.refresh),
+        ),
+      ),
       theme: ThemeData(useMaterial3: false, primarySwatch: Colors.teal),
     );
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Flutter State $counter'), centerTitle: true,),
-      body: Center(
-        child: Counter(),
-      ),
-    );
-  }
-}
-int counter = 0;
-
-class Counter extends StatefulWidget {
-  const Counter({super.key});
-
-  @override
-  State<Counter> createState() => _CounterState();
-}
-class _CounterState extends State<Counter> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('$counter', style: TextStyle(fontSize: 64,)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            FloatingActionButton(
-              onPressed: ()=> setState(() => --counter),
-              child: Icon(Icons.remove),
-            ),
-            FloatingActionButton(
-              onPressed: ()=> setState(() => counter = 0),
-              child: Icon(Icons.refresh),
-            ),
-            FloatingActionButton(
-              onPressed: ()=> setState(() => ++counter),
-              child: Icon(Icons.add),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-}
+int counter1 = 0 , counter2 = 0;
 
