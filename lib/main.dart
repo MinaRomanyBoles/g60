@@ -42,7 +42,7 @@
 
 import 'package:flutter/material.dart';
 
-void mina(){
+void main(){
   runApp(const MyApp());
 }
 
@@ -50,26 +50,60 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const Home(),
+      theme: ThemeData(useMaterial3: false, primarySwatch: Colors.teal),
+    );
   }
 }
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return const MyText(txt: '',);
+    return Scaffold(
+      appBar: AppBar(title: Text('Flutter State $counter'), centerTitle: true,),
+      body: Center(
+        child: Counter(),
+      ),
+    );
   }
 }
-git init
+int counter = 0;
 
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/MinaRomanyBoles/g60.git
-git push -u origin main
+class Counter extends StatefulWidget {
+  const Counter({super.key});
+
+  @override
+  State<Counter> createState() => _CounterState();
+}
+class _CounterState extends State<Counter> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('$counter', style: TextStyle(fontSize: 64,)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            FloatingActionButton(
+              onPressed: ()=> setState(() => --counter),
+              child: Icon(Icons.remove),
+            ),
+            FloatingActionButton(
+              onPressed: ()=> setState(() => counter = 0),
+              child: Icon(Icons.refresh),
+            ),
+            FloatingActionButton(
+              onPressed: ()=> setState(() => ++counter),
+              child: Icon(Icons.add),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
